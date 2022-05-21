@@ -9,7 +9,7 @@
 
 
 ## Get Started 
-1- 
+1- npm install 
 2- 
 3-  
 4- 
