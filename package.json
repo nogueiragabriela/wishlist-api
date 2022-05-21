@@ -1,0 +1,33 @@
+{
+  "name": "wishlist-api",
+  "version": "1.0.0",
+  "description": "Api de lista de desejos. Conta com os modulos de produto, cliente e lista de desejo. ",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js --exec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jessellemcipriano/wishlist-api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jessellemcipriano/wishlist-api/issues"
+  },
+  "homepage": "https://github.com/jessellemcipriano/wishlist-api#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "fs": "^0.0.1-security",
+    "mongodb": "^4.6.0",
+    "mongoose": "^6.3.4",
+    "readline-sync": "^1.4.10"
+  }
+}
