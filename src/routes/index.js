@@ -1,8 +1,10 @@
 import express from 'express'
-//import RouterClients from '../client/client-routes'
+import {ClientRouter} from '../modules/client/client-routes.js'
+
 
 const router = express.Router()
 
-//router.use('/clients', RouterClients)
+router.use('/clients', ClientRouter)
+
 
 export default router

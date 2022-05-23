@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "Api de lista de desejos. Conta com os modulos de produto, cliente e lista de desejo. ",
   "type": "module",
-  "main": "src/server.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon src/server.js --exec "
+    "dev": "nodemon server.js --exec "
   },
   "repository": {
     "type": "git",

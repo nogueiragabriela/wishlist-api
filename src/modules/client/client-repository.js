@@ -1,10 +1,11 @@
-import clientModel from "./clientModel";
+import clientModel from "./client-model.js";
+import mongoose from "mongoose";
 
-export class ClientRepository {
 
-    async getById(id) {
-        return await clientModel.findById(id);
-    }
+mongoose.connect('mongodb+srv://jessycipriano:ukWx1LFDTT75LGSZ@apisdatabase.udwbb.mongodb.net/wishlist-api?retryWrites=true&w=majority')
+
+ class ClientRepository {
+ 
 
     async create(data) {
         return await clientModel.create(data);
@@ -18,8 +19,8 @@ export class ClientRepository {
         return await clientModel.findByIdAndDelete(id);
     }
 
-    async getByEmail(email) {
-        return await clientModel.findOne({ email: email });
+    async get(idOrEmail) {
+        return await clientModel.findOne({$or : [{'_id':idOrEmail}, {'email':idOrEmail}]});  
     }
 
     async getAll(page, limit, params) {
@@ -28,3 +29,5 @@ export class ClientRepository {
     
 }
 
+
+export default ClientRepository;
