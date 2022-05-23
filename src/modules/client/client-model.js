@@ -1,47 +1,50 @@
 // create product mongoose model
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+
 const Schema = mongoose.Schema;
 
 const clientSchema = new Schema({
     name: {
         type: String,
-        required: true,
+        //required: true,
         trim: true,
     },
     email: {
         type: String,
         required: true,
         trim: true,
+        unique: true,
     },
     password: {
         type: String,
-        required: true,
+        //required: true,
         trim: true,
     },
     phone: {
         type: String,
-        required: true,
+        //required: true,
         trim: true,
     },
     address: {
         city: {
             type: String,
-            required: true,
+            //required: true,
             trim: true,
         },
         state: {
             type: String,
-            required: true,
+            //required: true,
             trim: true,
         },
         zip: {
             type: String,
-            required: true,
+            //required: true,
             trim: true,
         },
         country: {
             type: String,
-            required: true,
+            //required: true,
             trim: true,
         }
     },
@@ -52,5 +55,4 @@ const clientSchema = new Schema({
 });
 
 const clientModel = mongoose.model('Client', clientSchema);
-
-module.exports = clientModel;
+export default clientModel;

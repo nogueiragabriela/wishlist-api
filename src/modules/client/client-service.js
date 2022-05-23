@@ -1,31 +1,34 @@
-import { ClientRepository } from "./client-repository"
 
-class ClientService {
+class ClientService  {
+constructor(
+    clientRepository
+) {
+     this.clientRepository = clientRepository
+}
 
-    create(data) {
+    async create(data) {
         const email = data.email
         if (!email) {
             throw new Error("Email is required")
         }
-        const emailExists = ClientRepository.emailExists(email)
+        const emailExists = await this.clientRepository.getByEmail(email)
         if (emailExists) {
             throw new Error("Email already exists")
         }
-        return ClientRepository.create(data)
+        return await this.clientRepository.create(data)
     }
 
     update(id, data) {
-        const id = data.id
         if (!id) {
             throw new Error("id is required")
         }
         if (data.email) {
-            const emailExists = ClientRepository.emailExists(data.email)
+            const emailExists = this.clientRepository.getByEmail(data.email)
             if (emailExists) {
                 return ("Email already exists")
             }
         }
-        return ClientRepository.update(id, data)
+        return this.clientRepository.update(id, data)
     }
 
     delete(id) {
@@ -35,7 +38,7 @@ class ClientService {
 
         // chamar o serviço de wishList para deletar todas as wishsList do cliente
 
-        return ClientRepository.delete(id)
+        return this.clientRepository.delete(id)
     }
 
     // testar se está funcionando
@@ -44,16 +47,15 @@ class ClientService {
             params = { name: { $regex: params.name, $options: 'i' } }
         }
         const startIndex = (page - 1) * limit;
-        return ClientRepository.getAll(startIndex, limit, params)
+        return this.clientRepository.getAll(startIndex, limit, params)
     }
 
-    getById(id) {
-        return ClientRepository.getById(id)
+
+    get(idOrEmail) {
+        return this.clientRepository.get(idOrEmail)
     }
 
-    getByEmail(email) {
-        return ClientRepository.getByEmail(email)
-    }
+
 
 }
 
