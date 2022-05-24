@@ -2,54 +2,53 @@ import ClientService from './client-service.js'
 import ClientRepository from './client-repository.js'
 
 class ClientController {
+
+    clientRepository = new ClientRepository()
+
     async create(data) {
         try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
+            const clientService = new ClientService(this.clientRepository)
             return await clientService.create(data)
         }
-        catch (err) { 
+        catch (err) {
             console.log(err)
         }
     }
 
-    update(id, data) {
+    async update(id, data) {
         try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
-            return clientService.update(id, data)
+            const clientService = new ClientService(this.clientRepository)
+            return await clientService.update(id, data)
         } catch (err) { }
     }
 
-    delete(id) {
+    async delete(id) {
         try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
-            return clientService.delete(id)
+            const clientService = new ClientService(this.clientRepository)
+            return await clientService.delete(id)
         } catch (err) { }
     }
 
-    getAll(page, limit, params) {
+    async get(idOrEmail) {
         try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
-            return clientService.getAll(page, limit, params)
-        } catch (err) { }
-    }
-
-    get(idOrEmail) {
-        try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
-            return clientService.get(idOrEmail)
+            const clientService = new ClientService(this.clientRepository)
+            const client = await clientService.get(idOrEmail)
+            return client
         } catch { }
     }
 
-    getClientLists(id){
+    async getAll(page, limit, params) {
         try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
-            return clientService.getClientLists(id)
+            const clientService = new ClientService(this.clientRepository)
+            return await clientService.getAll(page, limit, params)
+        } catch (err) { }
+    }
+
+
+    async getClientLists(id) {
+        try {
+            const clientService = new ClientService(this.clientRepository)
+            return await clientService.getClientLists(id)
         } catch { }
     }
 
