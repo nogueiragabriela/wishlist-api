@@ -1,4 +1,5 @@
 import mongoose from "mongoose"
+import bcrypt from "bcrypt"
 class ClientService {
     constructor(
         clientRepository
@@ -15,6 +16,10 @@ class ClientService {
         if (emailExists) {
             throw new Error("Email already exists")
         }
+       
+        let hashPassword = await bcrypt.hash(data.password, 10)
+        data.password = hashPassword
+
         return await this.clientRepository.create(data)
     }
 
@@ -30,6 +35,12 @@ class ClientService {
                 return ("Email already exists")
             }
         }
+
+        if(data.password){
+            let hashPassword = await bcrypt.hash(data.password, 10)
+            data.password = hashPassword
+        }
+        
         return await this.clientRepository.update(id, data)
     }
 
