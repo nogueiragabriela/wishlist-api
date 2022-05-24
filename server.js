@@ -1,17 +1,17 @@
-import express from 'express' 
-import bodyParser from 'body-parser'
-import routes from './src/routes/index.js'
-import dotenv from 'dotenv'
+import express from 'express';
+import bodyParser from 'body-parser';
+import routes from './src/routes/index.js';
+import dotenv from 'dotenv';
 
-dotenv.config()
-const PORT = process.env.PORT;
+dotenv.config();
+const PORT = process.env.PORT || 3000;
 
-const app = express()
+const app = express();
 
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
-app.use('/', routes)
+app.use('/', routes);
 
 app.listen(PORT, () => {
-    console.log(`Executando na porta ${PORT}.`)
-})
+  console.log(`Executando na porta ${PORT}.`);
+});

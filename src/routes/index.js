@@ -1,8 +1,10 @@
-import express from 'express'
+import express from 'express';
 //import RouterClients from '../client/client-routes'
+import RouterProducts from '../modules/product/product-routes';
 
-const router = express.Router()
+const router = express.Router();
 
 //router.use('/clients', RouterClients)
+router.use('/products', RouterProducts);
 
-export default router
+export default router;
