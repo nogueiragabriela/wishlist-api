@@ -1,10 +1,10 @@
-
-class ClientService  {
-constructor(
-    clientRepository
-) {
-     this.clientRepository = clientRepository
-}
+import mongoose from "mongoose"
+class ClientService {
+    constructor(
+        clientRepository
+    ) {
+        this.clientRepository = clientRepository
+    }
 
     async create(data) {
         const email = data.email
@@ -18,41 +18,50 @@ constructor(
         return await this.clientRepository.create(data)
     }
 
-    update(id, data) {
+
+
+    async update(id, data) {
         if (!id) {
             throw new Error("id is required")
         }
         if (data.email) {
-            const emailExists = this.clientRepository.getByEmail(data.email)
+            const emailExists = await this.clientRepository.getByEmail(data.email)
             if (emailExists) {
                 return ("Email already exists")
             }
         }
-        return this.clientRepository.update(id, data)
+        return await this.clientRepository.update(id, data)
     }
 
-    delete(id) {
+
+    async delete(id) {
         if (!id) {
             throw new Error("id is required")
         }
-
-        // chamar o serviço de wishList para deletar todas as wishsList do cliente
-
-        return this.clientRepository.delete(id)
+        return await this.clientRepository.delete(id)
     }
 
-    // testar se está funcionando
-    getAll(page, limit, params) {
-        if (params.name) {
-            params = { name: { $regex: params.name, $options: 'i' } }
+
+    async get(idOrEmail) {
+        if (mongoose.Types.ObjectId.isValid(idOrEmail)) {
+            return await this.clientRepository.get(idOrEmail)
         }
-        const startIndex = (page - 1) * limit;
-        return this.clientRepository.getAll(startIndex, limit, params)
+        return await this.clientRepository.getByEmail(idOrEmail)
     }
 
 
-    get(idOrEmail) {
-        return this.clientRepository.get(idOrEmail)
+    async getAll(page, limit, params) {
+        if (params.name) {
+            params.name = { $regex: params.name, $options: 'i' }
+        }
+        delete params.page
+        delete params.limit
+        const startIndex = (page - 1) * limit;
+        return await this.clientRepository.getAll(startIndex, limit, params)
+    }
+
+    getClientLists(id) {
+        //chamar serviço do wishist
     }
 
 
