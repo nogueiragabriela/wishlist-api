@@ -15,7 +15,6 @@ ClientRouter.put('/:id', async (req, res) => {
     res.status(200).send(client)
 });
 
-
 ClientRouter.delete('/:id', async (req, res) => {
     const client = await clientController.delete(req.params.id)
     res.status(200).send(client)

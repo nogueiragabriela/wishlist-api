@@ -16,19 +16,21 @@ class ClientService {
         if (emailExists) {
             throw new Error("Email already exists")
         }
-       
         let hashPassword = await bcrypt.hash(data.password, 10)
         data.password = hashPassword
-
-        return await this.clientRepository.create(data)
+        const client = await this.clientRepository.create(data)
+        return client
     }
 
-
+    async get(idOrEmail) {
+        if (mongoose.Types.ObjectId.isValid(idOrEmail)) {
+            return await this.clientRepository.get(idOrEmail)
+        }
+        return await this.clientRepository.getByEmail(idOrEmail)
+    }
 
     async update(id, data) {
-        if (!id) {
-            throw new Error("id is required")
-        }
+        
         if (data.email) {
             const emailExists = await this.clientRepository.getByEmail(data.email)
             if (emailExists) {
@@ -40,7 +42,7 @@ class ClientService {
             let hashPassword = await bcrypt.hash(data.password, 10)
             data.password = hashPassword
         }
-        
+
         return await this.clientRepository.update(id, data)
     }
 
@@ -50,14 +52,6 @@ class ClientService {
             throw new Error("id is required")
         }
         return await this.clientRepository.delete(id)
-    }
-
-
-    async get(idOrEmail) {
-        if (mongoose.Types.ObjectId.isValid(idOrEmail)) {
-            return await this.clientRepository.get(idOrEmail)
-        }
-        return await this.clientRepository.getByEmail(idOrEmail)
     }
 
 
@@ -71,7 +65,7 @@ class ClientService {
         return await this.clientRepository.getAll(startIndex, limit, params)
     }
 
-    getClientLists(id) {
+    getWishLists(id) {
         //chamar serviço do wishist
     }
 
