@@ -1,14 +1,21 @@
-import * as express from 'express';
-import ProductController from './product-controller';
+import express from 'express';
+// import ProductController from './product-controller';
 
-const productRouter = express();
+const ProductRouter = express();
 
-const productController = new ProductController();
+// const productController = new ProductController();
+
+ProductRouter.get('/', (_req, res) => {
+  console.log('Funcionou!');
+  res.end();
+});
 
 /*
-productRouter.get('/', productController.listAll);
-productRouter.get('/:id', productController.listById);
-productRouter.post('/:id', productController.create);
-productRouter.put('/:id', productController.update);
-productRouter.delete('/:id', productController.delete);
+ProductRouter.get('/', productController.listAll);
+ProductRouter.get('/:id', productController.listById);
+ProductRouter.post('/:id', productController.create);
+ProductRouter.put('/:id', productController.update);
+ProductRouter.delete('/:id', productController.delete);
 */
+
+export { ProductRouter };
