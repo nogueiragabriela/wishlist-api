@@ -7,10 +7,7 @@ const ClientRouter = express();
 
 const clientController = new ClientController();
 
-ClientRouter.post('/', InputValidation(createClientSchema), async (req, res) => {
-    const client = await clientController.create(req.body)
-    res.status(200).send(client)
-});
+ClientRouter.post('/', InputValidation(createClientSchema), clientController.create);
 
 ClientRouter.put('/:id', InputValidation(updateClientSchema), async (req, res) => {
     const client = await clientController.update(req.params.id, req.body)

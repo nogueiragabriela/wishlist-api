@@ -1,19 +1,23 @@
 import ClientService from './client-service.js'
 import ClientRepository from './client-repository.js'
+import httpStatus from 'http-status'
 
 class ClientController {
 
-    clientRepository = new ClientRepository()
-
-
-    //TODO: implementar a resposta de erro no catch
-    async create(data) {
+    
+    async create(req, res) {
         try {
-            const clientService = new ClientService(this.clientRepository)
-            return await clientService.create(data)
+            const clientRepository = new ClientRepository()
+            const clientService = new ClientService(clientRepository)
+
+            const client =  await clientService.create(req.body)
+            res.status(httpStatus.CREATED).send(client)
         }
         catch (err) {
-            throw new Error(err)
+            console.log(err.message)
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                mensagem: err.message
+            })
         }
     }
 

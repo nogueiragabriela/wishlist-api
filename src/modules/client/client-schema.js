@@ -1,7 +1,7 @@
 import Joi from "joi"
 
 const createClientSchema = Joi.object({
-    email: Joi.string().email().required(),
+    email: Joi.string().email().required().messages({'string.email': 'Email is not valid', 'string.empty': 'Email is required'}),
     name: Joi.string().required(),
     password: Joi.string().alphanum().required(),
     phone: Joi.string().alphanum().required(),

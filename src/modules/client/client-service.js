@@ -8,11 +8,13 @@ class ClientService {
     }
 
     async create(data) {
+        console.log('serviço')
         const email = data.email
         const emailExists = await this.clientRepository.getByEmail(email)
         if (emailExists) {
             throw new Error("Email already exists")
         }
+        
         let hashPassword = await bcrypt.hash(data.password, 10)
         data.password = hashPassword
         const client = await this.clientRepository.create(data)
