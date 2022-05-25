@@ -3,7 +3,7 @@ import LoginRepository from './login-repository.js'
 
 class LoginController {
     LoginRepository = new LoginRepository()
-    async create(data) {
+    async login(data) {
         try {
             const loginService = new LoginService(this.LoginRepository)
             return await loginService.verify(data)
