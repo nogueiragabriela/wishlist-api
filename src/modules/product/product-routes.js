@@ -5,8 +5,10 @@ const productRouter = express();
 
 const productController = new ProductController();
 
+/*
 productRouter.get('/', productController.listAll);
 productRouter.get('/:id', productController.listById);
 productRouter.post('/:id', productController.create);
 productRouter.put('/:id', productController.update);
 productRouter.delete('/:id', productController.delete);
+*/
