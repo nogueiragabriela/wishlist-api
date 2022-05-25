@@ -1,16 +1,18 @@
 import express from 'express';
 import ClientController from './client-controller.js';
+import { InputValidation } from '../../middleware/inputValidation/index.js';
+import { createClientSchema, updateClientSchema } from './client-schema.js';
 
 const ClientRouter = express();
 
 const clientController = new ClientController();
 
-ClientRouter.post('/', async (req, res) => {
+ClientRouter.post('/', InputValidation(createClientSchema), async (req, res) => {
     const client = await clientController.create(req.body)
     res.status(200).send(client)
 });
 
-ClientRouter.put('/:id', async (req, res) => {
+ClientRouter.put('/:id', InputValidation(updateClientSchema), async (req, res) => {
     const client = await clientController.update(req.params.id, req.body)
     res.status(200).send(client)
 });
