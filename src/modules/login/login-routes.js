@@ -7,9 +7,6 @@ const LoginRouter = express();
 
 const loginController = new LoginController();
 
-LoginRouter.post('/', InputValidation(loginSchema), async (req, res) => {
-    const login = await loginController.login(req.body)
-    res.status(200).send(login)
-});
+LoginRouter.post('/', InputValidation(loginSchema), async (req, res) =>  loginController.login(req, res));
 
 export { LoginRouter }
