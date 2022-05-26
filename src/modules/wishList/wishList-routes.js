@@ -1,8 +1,15 @@
-import * as express from 'express';
-import wishListController from './wishList-controller';
+import express from "express";
+import WishListController from './wishList-controller.js';
 
-const wishListRouter = express();
+const WishListRouter = express();
 
 const wishListController = new WishListController();
 
-wishListRouter.get('/:id', wishListController.listWishListById);
+WishListRouter.post("/", async (req, res) => {
+  const wishList = await wishListController.create(req.body);
+  res.status(200).send(wishList);
+});
+
+//wishListRouter.get('/:id', wishListController.listWishListById);
+
+export default WishListRouter;
