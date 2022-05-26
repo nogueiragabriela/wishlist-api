@@ -19,16 +19,13 @@ Um módulo lista de desejo dos produtos do e-commerce para seus clientes, que te
 
 ## Get Started 
 
-## 🚀 Instalação e configuração
-
-Antes de começar, verifique se você atendeu aos seguintes requisitos:
-* Você instalou a versão mais recente do `npm, node e postgres`
+## Instalação e configuração
 
 Para a instalação, siga estas etapas:
 
 1) Faça um clone do repositório:
 ```
-  git clone https://github.com/saalua/luizacode-omnichannel.git
+  git clone 
 ```
 
 2) Na pasta do projeto, abra o terminal e execute o comando abaixo para instalar as dependências:
