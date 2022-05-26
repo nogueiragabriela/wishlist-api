@@ -42,8 +42,9 @@ npm run dev
 ```
 
 
-## Variáveis de ambiente 
+## 👀 Variáveis de ambiente 
 #### Development
+
 
 ## 🔥 Grupo Warriors 
 - Jéssellem Cipriano
