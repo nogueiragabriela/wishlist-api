@@ -1,4 +1,4 @@
-# wishlist-api: Luiza Code - 4 edição
+# 🚀 wishlist-api 🚀: Luiza Code - 4 edição
 
 <p>
   <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" />
@@ -7,17 +7,17 @@
   <img src="https://img.shields.io/badge/MongoDB-316192?style=for-the-badge&logo=mongodb&logoColor=white" />
 </p>
 
-## O que é?
+## 🧐 O que é?
 
 Um módulo lista de desejo dos produtos do e-commerce para seus clientes, que tenhas as seguintes funcionalidades:
 - Gerenciamento de clientes
 - Gerenciamento de produtos
 - Gerenciamento da lista de desejos
 
-## Status
-🚧 🚀 Em construção...🚧
+## ✅ Status
+🚧 Em construção...🚧
 
-## Pré-requisitos
+## 👍 Pré-requisitos
 - Node JS
 - NPM
 - Banco de dados
@@ -45,7 +45,7 @@ npm run dev
 ## Variáveis de ambiente 
 #### Development
 
-## Grupo Warriors 🔥
+## 🔥 Grupo Warriors 
 - Jéssellem Cipriano
 - Gabriela
 - Liliane
