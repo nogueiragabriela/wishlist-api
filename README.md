@@ -22,7 +22,7 @@ Um módulo lista de desejo dos produtos do e-commerce para seus clientes, que te
 - NPM
 - Banco de dados
 
-## Instalação e configuração
+## ✍️ Instalação e configuração
 
 Para a instalação, siga estas etapas:
 
