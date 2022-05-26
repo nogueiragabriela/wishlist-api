@@ -1,4 +1,4 @@
-# Wishlist-api: Luiza Code - 4 edição
+# wishlist-api: Luiza Code - 4 edição
 
 
 ## O que é?
