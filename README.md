@@ -25,7 +25,7 @@ Para a instalação, siga estas etapas:
 
 1) Faça um clone do repositório:
 ```
-  git clone https://github.com/jessellemcipriano/wishlist-api.git
+git clone https://github.com/jessellemcipriano/wishlist-api.git
 ```
 
 2) Na pasta do projeto, abra o terminal e execute o comando abaixo para instalar as dependências:
