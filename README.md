@@ -29,11 +29,14 @@ Para a instalação, siga estas etapas:
 ```
 
 2) Na pasta do projeto, abra o terminal e execute o comando abaixo para instalar as dependências:
-
 ```
 npm install
 ```
 
+3) Execute o comando abaixo para iniciar o servidor da aplicação:
+```
+npm run dev
+```
 
 
 ## Variáveis de ambiente 
