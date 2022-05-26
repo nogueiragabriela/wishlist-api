@@ -1,15 +1,19 @@
 import LoginService from './login-service.js'
 import LoginRepository from './login-repository.js'
+import httpStatus from 'http-status'
 
 class LoginController {
     LoginRepository = new LoginRepository()
-    async create(data) {
+    async login(req, res) {
         try {
             const loginService = new LoginService(this.LoginRepository)
-            return await loginService.verify(data)
+            const accessToken = await loginService.verify(req.body)
+            res.status(httpStatus.OK).send(accessToken)
         }
         catch (err) {
-            console.log(err)
+            res.status(httpStatus.UNAUTHORIZED).json({
+                message: err.message
+            })
         }
     }
 }

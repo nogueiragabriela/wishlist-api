@@ -1,38 +1,22 @@
 import express from 'express';
 import ClientController from './client-controller.js';
+import { InputValidation } from '../../middleware/inputValidation/index.js';
+import { createClientSchema, updateClientSchema } from './client-schema.js';
 
 const ClientRouter = express();
 
 const clientController = new ClientController();
 
-ClientRouter.post('/', async (req, res) => {
-    const client = await clientController.create(req.body)
-    res.status(200).send(client)
-});
+ClientRouter.post('/', InputValidation(createClientSchema), async (req, res) => clientController.create(req, res));
 
-ClientRouter.put('/:id', async (req, res) => {
-    const client = await clientController.update(req.params.id, req.body)
-    res.status(200).send(client)
-});
+ClientRouter.put('/:id', InputValidation(updateClientSchema), async (req, res) =>  clientController.update(req, res));
 
-ClientRouter.delete('/:id', async (req, res) => {
-    const client = await clientController.delete(req.params.id)
-    res.status(200).send(client)
-});
+ClientRouter.delete('/:id', async (req, res) => clientController.delete(req, res));
 
-ClientRouter.get('/:idOrEmail', async (req, res) => {
-    const client = await clientController.get(req.params.idOrEmail)
-    res.status(200).send(client)
-});
+ClientRouter.get('/:idOrEmail', async (req, res) => clientController.get(req, res));
 
-ClientRouter.get('/', async (req, res) => {
-    const clients = await clientController.getAll(req.query.page, req.query.limit, req.query)
-    res.status(200).send(clients)
- });
+ClientRouter.get('/', async (req, res) => clientController.getAll(req, res));
 
- ClientRouter.get('/wishlist/:id', async (req, res) => {
-    const clientWishLists = await clientController.getClientLists(req.params.id)
-    res.status(200).send(clientWishLists)
- });
+ClientRouter.get('/wishlist/:id', async (req, res) => clientController.getClientLists(req, res));
 
 export { ClientRouter }

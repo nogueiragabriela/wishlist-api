@@ -11,6 +11,11 @@ class LoginService {
     async verify(data) {
         const email = data.email
         const client = await this.clientRepository.getByEmail(email)
+      
+        if (!client) {
+            throw new Error("User not found")
+        }
+
         const match = await bcrypt.compare(data.password, client.password)
     
         if (!match) {

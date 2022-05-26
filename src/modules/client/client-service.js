@@ -9,13 +9,10 @@ class ClientService {
 
     async create(data) {
         const email = data.email
-        if (!email) {
-            throw new Error("Email is required")
-        }
-        const emailExists = await this.clientRepository.getByEmail(email)
+        const emailExists = await this.clientRepository.getByEmail(email)   
         if (emailExists) {
             throw new Error("Email already exists")
-        }
+        } 
         let hashPassword = await bcrypt.hash(data.password, 10)
         data.password = hashPassword
         const client = await this.clientRepository.create(data)
@@ -29,28 +26,22 @@ class ClientService {
         return await this.clientRepository.getByEmail(idOrEmail)
     }
 
-    async update(id, data) {
-        
+    async update(id, data) {   
         if (data.email) {
             const emailExists = await this.clientRepository.getByEmail(data.email)
             if (emailExists) {
-                return ("Email already exists")
+                throw new Error("Email already exists")
             }
         }
-
         if(data.password){
             let hashPassword = await bcrypt.hash(data.password, 10)
             data.password = hashPassword
         }
-
         return await this.clientRepository.update(id, data)
     }
 
 
     async delete(id) {
-        if (!id) {
-            throw new Error("id is required")
-        }
         return await this.clientRepository.delete(id)
     }
 
