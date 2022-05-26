@@ -44,7 +44,7 @@ npm install
 ## Variáveis de ambiente 
 #### Development
 
-## Grupo Warriors
+## Grupo Warriors 🔥
 - Jéssellem Cipriano
 - Gabriela
 - Liliane
