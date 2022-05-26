@@ -9,7 +9,7 @@
 
 ## O que é?
 
-O objetivo desse desafio é a criação de uma API de Wishlist, que tenhas as seguintes funcionalidades:
+Um módulo lista de desejo dos produtos do e-commerce para seus clientes, que tenhas as seguintes funcionalidades:
 - Gerenciamento de clientes
 - Gerenciamento de produtos
 - Gerenciamento da lista de desejos
