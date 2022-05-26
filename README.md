@@ -17,7 +17,10 @@ Um módulo lista de desejo dos produtos do e-commerce para seus clientes, que te
 ## Status
 🚧 🚀 Em construção...🚧
 
-## Get Started 
+## Pré-requisitos
+- Node JS
+- NPM
+- Banco de dados
 
 ## Instalação e configuração
 
