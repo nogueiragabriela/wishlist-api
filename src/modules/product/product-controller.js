@@ -1,52 +1,40 @@
-import ProductService from './product-service'
-
+import ProductService from './product-service.js';
+import ProductRepository from './product-repository.js';
+// import httpStatus from 'http-status'
 
 class ProductController {
+  productRepository = new ProductRepository();
 
-    create(data) {
-        try {
-            const productService = new ProductService()
-            return productService.create(data)
-        }
-        catch (err) { }
-    }
+  async create(req, res) {
+    try {
+      const productService = new ProductService(this.productRepository);
+      const product = await productService.create(req.body);
+      return res.status(201).json({ product });
+    } catch (err) {}
+  }
 
-    update(id, data) {
-        try {
-            const productService = new ProductService()
-            return productService.update(id, client)
-        } catch (err) { }
-    }
+  /*
+  update(id, data) {
+    try {
+      const productService = new ProductService();
+      return productService.update(id, client);
+    } catch (err) {}
+  }
 
-    delete(id) {
-        try {
-            const productService = new ProductService()
-            return productService.delete(id)
-        } catch (err) { }
-    }
+  delete(id) {
+    try {
+      const productService = new ProductService();
+      return productService.delete(id);
+    } catch (err) {}
+  }
 
-    listAll(page, limit, params) {
-        try {
-            const productService = new ProductService()
-            return productService.listAll(page, limit, params)
-        } catch (err) { }
-    }
-
-    listById(id) {
-        try{
-            const productService = new ProductService()
-            return productService.listById(id)
-        } catch {}
-    }
-
-    listByEmail(email) {
-        try {
-            const productService = new ProductService()
-            return productService.getByEmail(email)
-        } catch (err) { }
-    }
-        
+  listById(id) {
+    try {
+      const productService = new ProductService();
+      return productService.listById(id);
+    } catch {}
+  }
+ */
 }
 
-
-export default ProductController
+export default ProductController;

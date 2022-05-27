@@ -1,22 +1,26 @@
-import * as express from 'express';
-import ProductController from './product-controller';
+import express from 'express';
+import ProductController from './product-controller.js';
 import { InputValidation } from '../../middleware/inputValidation/index.js';
 import { createProductSchema, updateProductSchema } from './product-schema.js';
 
 const ProductRouter = express();
 
-// const productController = new ProductController();
+const productController = new ProductController();
 
-productRouter.post(
+ProductRouter.post(
   '/',
-  InputValidation(createProductSchema),
+  // InputValidation(createProductSchema),
   async (req, res) => productController.create(req, res),
 );
 
-productRouter.put(
+ProductRouter.put(
   '/:id',
   InputValidation(updateProductSchema),
   async (req, res) => productController.update(req, res),
 );
 
-productRouter.get('/:id', productController.listProductById);
+ProductRouter.get('/:id', async (req, res) =>
+  productController.listProductById(req, res),
+);
+
+export { ProductRouter };
