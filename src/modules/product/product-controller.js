@@ -5,36 +5,57 @@ import ProductRepository from './product-repository.js';
 class ProductController {
   productRepository = new ProductRepository();
 
-  async create(req, res) {
+  async create(req, res, next) {
     try {
       const productService = new ProductService(this.productRepository);
       const product = await productService.create(req.body);
       return res.status(201).json({ product });
-    } catch (err) {}
+    } catch (err) {
+      next(err);
+    }
   }
 
-  /*
-  update(id, data) {
+  async listProductById(req, res, next) {
     try {
-      const productService = new ProductService();
-      return productService.update(id, client);
-    } catch (err) {}
+      const productService = new ProductService(this.productRepository);
+      const product = await productService.listById(req.params.id);
+      return res.status(200).json({ product });
+    } catch (err) {
+      next(err);
+    }
   }
 
-  delete(id) {
+  async listAllProducts(req, res, next) {
     try {
-      const productService = new ProductService();
-      return productService.delete(id);
-    } catch (err) {}
+      const productService = new ProductService(this.productRepository);
+      const products = await productService.listAllProducts();
+      return res.status(200).json({ products });
+    } catch (err) {
+      next(err);
+    }
   }
 
-  listById(id) {
+  async update(req, res, next) {
     try {
-      const productService = new ProductService();
-      return productService.listById(id);
-    } catch {}
+      const data = req.body;
+      const { id } = req.params;
+      const productService = new ProductService(this.productRepository);
+      const product = await productService.update(id, data);
+      return res.status(200).json({ product });
+    } catch (err) {
+      next(err);
+    }
   }
- */
+
+  async delete(req, res, next) {
+    try {
+      const productService = new ProductService(this.productRepository);
+      const product = await productService.delete(req.params.id);
+      return res.status(200).json({ product });
+    } catch (err) {
+      next(err);
+    }
+  }
 }
 
 export default ProductController;

@@ -1,14 +1,15 @@
 import mongoose from 'mongoose';
+import ProductRepository from './product-repository.js';
 
 class ProductService {
-  constructor(productRepository) {
+  constructor(productRepository = ProductRepository) {
     this.productRepository = productRepository;
   }
 
   async create(data) {
-    const { type, description, brand, price } = data; // title, description, brand, price * falta código
+    const { title, description, brand, price } = data;
     const product = await this.productRepository.create({
-      type,
+      title,
       description,
       brand,
       price,
@@ -17,12 +18,11 @@ class ProductService {
   }
 
   async listById(id) {
-    /* 
-    if (mongoose.Types.ObjectId.isValid(id)) {
-      return await this.clientRepository.get(id);
-    }
-    */
-    return await this.productRepository.listById(id);
+    return await this.productRepository.get(id);
+  }
+
+  async listAllProducts() {
+    return await this.productRepository.getAll();
   }
 
   async update(id, data) {
