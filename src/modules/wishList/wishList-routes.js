@@ -1,15 +1,16 @@
-import express from "express";
-import WishListController from './wishList-controller.js';
+import express from 'express';
+import wishListController from './wishList-controller';
+import { InputValidation } from '../../middleware/inputValidation/index.js';
+import { createwishListSchema, updatewishListSchema } from './wishList-schema.js';
 
 const WishListRouter = express();
 
 const wishListController = new WishListController();
 
-WishListRouter.post("/", async (req, res) => {
-  const wishList = await wishListController.create(req.body);
-  res.status(200).send(wishList);
-});
+wishListRouter.post('/', InputValidation(createwishListSchema), async (req, res) => wishListController.create(req, res));
 
-//wishListRouter.get('/:id', wishListController.listWishListById);
+wishListRouter.put('/:id', InputValidation(updatewishListSchema), async (req, res) =>  wishListController.update(req, res));
 
-export default WishListRouter;
+wishListRouter.get('/:id', wishListController.listWishListById);
+
+export default wishListRouter;

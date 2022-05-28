@@ -1,58 +1,63 @@
-
-class ClientService  {
-constructor(
-    clientRepository
-) {
-     this.clientRepository = clientRepository
-}
+import mongoose from "mongoose"
+import bcrypt from "bcrypt"
+class ClientService {
+    constructor(
+        clientRepository
+    ) {
+        this.clientRepository = clientRepository
+    }
 
     async create(data) {
         const email = data.email
-        if (!email) {
-            throw new Error("Email is required")
-        }
-        const emailExists = await this.clientRepository.getByEmail(email)
+        const emailExists = await this.clientRepository.getByEmail(email)   
         if (emailExists) {
             throw new Error("Email already exists")
-        }
-        return await this.clientRepository.create(data)
+        } 
+        let hashPassword = await bcrypt.hash(data.password, 10)
+        data.password = hashPassword
+        const client = await this.clientRepository.create(data)
+        return client
     }
 
-    update(id, data) {
-        if (!id) {
-            throw new Error("id is required")
+    async get(idOrEmail) {
+        if (mongoose.Types.ObjectId.isValid(idOrEmail)) {
+            return await this.clientRepository.get(idOrEmail)
         }
+        return await this.clientRepository.getByEmail(idOrEmail)
+    }
+
+    async update(id, data) {   
         if (data.email) {
-            const emailExists = this.clientRepository.getByEmail(data.email)
+            const emailExists = await this.clientRepository.getByEmail(data.email)
             if (emailExists) {
-                return ("Email already exists")
+                throw new Error("Email already exists")
             }
         }
-        return this.clientRepository.update(id, data)
-    }
-
-    delete(id) {
-        if (!id) {
-            throw new Error("id is required")
+        if(data.password){
+            let hashPassword = await bcrypt.hash(data.password, 10)
+            data.password = hashPassword
         }
-
-        // chamar o serviço de wishList para deletar todas as wishsList do cliente
-
-        return this.clientRepository.delete(id)
+        return await this.clientRepository.update(id, data)
     }
 
-    // testar se está funcionando
-    getAll(page, limit, params) {
+
+    async delete(id) {
+        return await this.clientRepository.delete(id)
+    }
+
+
+    async getAll(page, limit, params) {
         if (params.name) {
-            params = { name: { $regex: params.name, $options: 'i' } }
+            params.name = { $regex: params.name, $options: 'i' }
         }
+        delete params.page
+        delete params.limit
         const startIndex = (page - 1) * limit;
-        return this.clientRepository.getAll(startIndex, limit, params)
+        return await this.clientRepository.getAll(startIndex, limit, params)
     }
 
-
-    get(idOrEmail) {
-        return this.clientRepository.get(idOrEmail)
+    getWishLists(id) {
+        //chamar serviço do wishist
     }
 
 

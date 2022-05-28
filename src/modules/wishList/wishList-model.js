@@ -9,14 +9,14 @@ const wishListSchema = new Schema({
         required: true,
         trim: true,
     },
-    client_id: {
+    client: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'clients',
+        ref: 'Client',
         required: true,
     },
     products: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'products',
+        ref: 'Product',
         required: true,
 
     }],

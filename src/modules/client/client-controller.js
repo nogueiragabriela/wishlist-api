@@ -1,56 +1,122 @@
 import ClientService from './client-service.js'
 import ClientRepository from './client-repository.js'
+import httpStatus from 'http-status'
 
 class ClientController {
-    async create(data) {
+    clientRepository = new ClientRepository()
+
+    async create(req, res) {
         try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
-            return await clientService.create(data)
+            const clientService = new ClientService(this.clientRepository)
+            const client = await clientService.create(req.body)
+            res.status(httpStatus.CREATED).json({
+                clientId: client._id,
+                name: client.name,
+                email: client.email
+            })
         }
-        catch (err) { 
-            console.log(err)
+        catch (err) {
+            if (err.message.includes('already exists')) {
+                res.status(httpStatus.CONFLICT).json({
+                    message: err.message
+                })
+            }
+            else {
+                res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                    message: err.message
+                })
+            }
         }
     }
 
-    update(id, data) {
+    async get(req, res) {
         try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
-            return clientService.update(id, data)
-        } catch (err) { }
+            const clientService = new ClientService(this.clientRepository)
+            const client = await clientService.get(req.params.idOrEmail)
+            if (!client) {
+                res.status(httpStatus.NOT_FOUND).send()
+            }
+            else {
+                res.status(httpStatus.OK).json({
+                    client
+                })
+            }
+        } catch {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                message: err.message
+            })
+        }
     }
 
-    delete(id) {
+    async update(req, res) {
         try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
-            return clientService.delete(id)
-        } catch (err) { }
+            const clientService = new ClientService(this.clientRepository)
+            const client = await clientService.update(req.params.id, req.body)
+            res.status(httpStatus.OK).json({
+                client: client
+            })
+
+        } catch (err) {
+            if (err.message.includes('already exists')) {
+                res.status(httpStatus.CONFLICT).json({
+                    message: err.message
+                })
+            }
+            else {
+                res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                    message: err.message
+                })
+            }
+        }
     }
 
-    getAll(page, limit, params) {
+    async delete(req, res) {
         try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
-            return clientService.getAll(page, limit, params)
-        } catch (err) { }
+            const clientService = new ClientService(this.clientRepository)
+            const client = await clientService.delete(req.params.id)
+            if (!client) {
+                res.status(httpStatus.NOT_FOUND).send()
+            }
+            else {
+                res.status(httpStatus.OK).json({
+                    client: client
+                })
+            }
+        } catch (err) {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                message: err.message
+            })
+        }
     }
 
-    get(idOrEmail) {
+    async getAll(req, res) {
         try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
-            return clientService.get(idOrEmail)
-        } catch { }
+            const clientService = new ClientService(this.clientRepository)
+            const clients = await clientService.getAll(req.query.page, req.query.limit, req.query)
+            if (!clients) {
+                res.status(httpStatus.NOT_FOUND).send()
+            }
+            else {
+                res.status(httpStatus.OK).json({
+                    clients: clients
+                })
+            }
+        } catch (err) {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                message: err.message
+            })
+        }
     }
 
-    getClientLists(id){
+    async getWishLists(id) {
         try {
-            const clientRepository = new ClientRepository()
-            const clientService = new ClientService(clientRepository)
-            return clientService.getClientLists(id)
-        } catch { }
+            const clientService = new ClientService(this.clientRepository)
+            return await clientService.getWishLists(id)
+        } catch {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                message: err.message
+            })
+        }
     }
 
 }

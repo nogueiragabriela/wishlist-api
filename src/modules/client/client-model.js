@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 const clientSchema = new Schema({
     name: {
         type: String,
-        //required: true,
+        required: true,
         trim: true,
     },
     email: {
@@ -18,41 +18,43 @@ const clientSchema = new Schema({
     },
     password: {
         type: String,
-        //required: true,
+        required: true,
         trim: true,
     },
     phone: {
         type: String,
-        //required: true,
+        required: true,
         trim: true,
     },
     address: {
         city: {
             type: String,
-            //required: true,
             trim: true,
         },
         state: {
             type: String,
-            //required: true,
             trim: true,
         },
         zip: {
             type: String,
-            //required: true,
             trim: true,
         },
         country: {
             type: String,
-            //required: true,
             trim: true,
         }
     },
+}, {
     createdAt: {
         type: Date,
         default: Date.now,
+    },
+    updatedAt: {
+        type: Date,
+        default: Date.now,
     }
-});
+}
+);
 
 const clientModel = mongoose.model('Client', clientSchema);
 export default clientModel;

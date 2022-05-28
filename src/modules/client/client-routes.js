@@ -1,19 +1,22 @@
 import express from 'express';
 import ClientController from './client-controller.js';
+import { InputValidation } from '../../middleware/inputValidation/index.js';
+import { createClientSchema, updateClientSchema } from './client-schema.js';
 
 const ClientRouter = express();
 
 const clientController = new ClientController();
 
-ClientRouter.post('/', async (req, res) =>{
-    const client = await clientController.create(req.body)
-     res.status(200).send(client)
-});
+ClientRouter.post('/', InputValidation(createClientSchema), async (req, res) => clientController.create(req, res));
 
+ClientRouter.put('/:id', InputValidation(updateClientSchema), async (req, res) =>  clientController.update(req, res));
 
-//  ClientRouter.update('/:id', clientController.update);
-//  ClientRouter.delete('/:id', clientController.delete);
-//  ClientRouter.get('/:idOrEmail', clientController.get);
-//  ClientRouter.get('/', clientController.getAll);
+ClientRouter.delete('/:id', async (req, res) => clientController.delete(req, res));
 
-export  {ClientRouter}
+ClientRouter.get('/:idOrEmail', async (req, res) => clientController.get(req, res));
+
+ClientRouter.get('/', async (req, res) => clientController.getAll(req, res));
+
+ClientRouter.get('/wishlist/:id', async (req, res) => clientController.getClientLists(req, res));
+
+export { ClientRouter }

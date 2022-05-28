@@ -19,10 +19,10 @@ class WishListService {
                 if(products[i].id === products[j].id) {
                     throw new Error("You have repeated products in your wishlist!")
                 }
-            }
-                
+            }       
         }
-        //Regra para o cliente para verificar se o cliente informado já é cadastrado
+        //Regra para o cliente para verificar se o cliente informado já é cadastrado?
+        //Regra para o produto para verificar se o(s) produto(s) informado(s) já é/sao cadastrado(s)?
         
         return await this.repository.create(data)
     }

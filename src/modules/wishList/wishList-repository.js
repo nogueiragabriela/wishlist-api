@@ -1,7 +1,10 @@
 import wishListModel from "./wishList-model.js";
 import mongoose from "mongoose";
+import dotenv from 'dotenv';
 
-mongoose.connect('mongodb+srv://jessycipriano:ukWx1LFDTT75LGSZ@apisdatabase.udwbb.mongodb.net/wishlist-api?retryWrites=true&w=majority')
+dotenv.config()
+
+mongoose.connect(process.env.CONNECTION_STRING)
 class WishListRepository {
 
     async getById(id) {
