@@ -1,14 +1,36 @@
-import * as express from 'express';
-import ProductController from './product-controller'; 
+import express from 'express';
+import ProductController from './product-controller.js';
 import { InputValidation } from '../../middleware/inputValidation/index.js';
 import { createProductSchema, updateProductSchema } from './product-schema.js';
 
-const productRouter = express();
+const ProductRouter = express();
 
 const productController = new ProductController();
 
-productRouter.post('/', InputValidation(createProductSchema), async (req, res) => productController.create(req, res));
+ProductRouter.post(
+  '/',
+  // InputValidation(createProductSchema),
+  async (req, res, next) => productController.create(req, res, next),
+);
 
-productRouter.put('/:id', InputValidation(updateProductSchema), async (req, res) =>  productController.update(req, res));
+ProductRouter.delete(
+  '/:id',
+  // InputValidation(updateProductSchema),
+  async (req, res, next) => productController.delete(req, res, next),
+);
 
-productRouter.get('/:id', productController.listProductById);
+ProductRouter.put(
+  '/:id',
+  // InputValidation(updateProductSchema),
+  async (req, res, next) => productController.update(req, res, next),
+);
+
+ProductRouter.get('/:id', async (req, res, next) =>
+  productController.listProductById(req, res, next),
+);
+
+ProductRouter.get('/', async (req, res, next) =>
+  productController.listAllProducts(req, res, next),
+);
+
+export { ProductRouter };

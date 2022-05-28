@@ -1,52 +1,61 @@
-import ProductService from './product-service'
-
+import ProductService from './product-service.js';
+import ProductRepository from './product-repository.js';
+// import httpStatus from 'http-status'
 
 class ProductController {
+  productRepository = new ProductRepository();
 
-    create(data) {
-        try {
-            const productService = new ProductService()
-            return productService.create(data)
-        }
-        catch (err) { }
+  async create(req, res, next) {
+    try {
+      const productService = new ProductService(this.productRepository);
+      const product = await productService.create(req.body);
+      return res.status(201).json({ product });
+    } catch (err) {
+      next(err);
     }
+  }
 
-    update(id, data) {
-        try {
-            const productService = new ProductService()
-            return productService.update(id, client)
-        } catch (err) { }
+  async listProductById(req, res, next) {
+    try {
+      const productService = new ProductService(this.productRepository);
+      const product = await productService.listById(req.params.id);
+      return res.status(200).json({ product });
+    } catch (err) {
+      next(err);
     }
+  }
 
-    delete(id) {
-        try {
-            const productService = new ProductService()
-            return productService.delete(id)
-        } catch (err) { }
+  async listAllProducts(req, res, next) {
+    try {
+      const productService = new ProductService(this.productRepository);
+      const products = await productService.listAllProducts();
+      return res.status(200).json({ products });
+    } catch (err) {
+      next(err);
     }
+  }
 
-    listAll(page, limit, params) {
-        try {
-            const productService = new ProductService()
-            return productService.listAll(page, limit, params)
-        } catch (err) { }
+  async update(req, res, next) {
+    try {
+      const data = req.body;
+      const { id } = req.params;
+      const productService = new ProductService(this.productRepository);
+      const product = await productService.update(id, data);
+      return res.status(200).json({ product });
+    } catch (err) {
+      next(err);
     }
+  }
 
-    listById(id) {
-        try{
-            const productService = new ProductService()
-            return productService.listById(id)
-        } catch {}
+  async delete(req, res, next) {
+    try {
+      const productService = new ProductService(this.productRepository);
+      const product = await productService.delete(req.params.id);
+      return res.status(200).json({ product });
+    } catch (err) {
+      next(err);
     }
-
-    listByEmail(email) {
-        try {
-            const productService = new ProductService()
-            return productService.getByEmail(email)
-        } catch (err) { }
-    }
-        
+  }
 }
 
-
-export default ProductController
+export default ProductController;
