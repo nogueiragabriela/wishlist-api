@@ -1,25 +1,36 @@
-import wishListModel from "./wishListModel";
+import wishListModel from "./wishList-model.js";
+import mongoose from "mongoose";
+import dotenv from 'dotenv';
 
-export class WishListRepository {
+dotenv.config()
+
+mongoose.connect(process.env.CONNECTION_STRING)
+class WishListRepository {
 
     async getById(id) {
         return await wishListModel.findById(id);
     }
 
+    async getByName(name) {
+        return await wishListModel.findOne(name);
+    }
+
     async create(data) {
         return await wishListModel.create(data);
+        //Usar o populate
     }
 
-    async update(id, client) {
+    async update(id) {
         return await wishListModel.findByIdAndUpdate(id, client);
+        //Usar o populate
     }
 
-    async delete(id) {
+    async deleteWishList(id) {
         return await wishListModel.findByIdAndDelete(id);
     }
 
-    async getByEmail(email) {
-        return await wishListModel.findOne({ email: email });
+    async deleteProduct(id) {
+        return await wishListModel.findByIdAndDelete(id);
     }
 
     async getAll(page, limit, params) {
@@ -27,3 +38,5 @@ export class WishListRepository {
     }
     
 }
+
+export default WishListRepository

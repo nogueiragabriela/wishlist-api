@@ -38,7 +38,7 @@ class ClientController {
             }
             else {
                 res.status(httpStatus.OK).json({
-                    client: client
+                    client
                 })
             }
         } catch {

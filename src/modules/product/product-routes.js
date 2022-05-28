@@ -1,5 +1,5 @@
 import express from 'express';
-import ProductController from './product-controller.js';
+import ProductController from './product-controller'; 
 import { InputValidation } from '../../middleware/inputValidation/index.js';
 import { createProductSchema, updateProductSchema } from './product-schema.js';
 

@@ -16,5 +16,5 @@ app.use('/', routes);
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {
-  console.log(`Executando na porta ${PORT}.`);
-});
+    console.log(`🚀 Server started on port ${PORT}.`)
+})
