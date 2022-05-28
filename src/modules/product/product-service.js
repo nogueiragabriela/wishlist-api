@@ -17,11 +17,11 @@ class ProductService {
     return product;
   }
 
-  async listById(id) {
+  async getById(id) {
     return await this.productRepository.get(id);
   }
 
-  async listAllProducts() {
+  async getAll() {
     return await this.productRepository.getAll();
   }
 

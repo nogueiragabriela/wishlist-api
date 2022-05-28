@@ -15,7 +15,7 @@ class ProductController {
     }
   }
 
-  async listProductById(req, res, next) {
+  async getById(req, res, next) {
     try {
       const productService = new ProductService(this.productRepository);
       const product = await productService.listById(req.params.id);
@@ -25,7 +25,7 @@ class ProductController {
     }
   }
 
-  async listAllProducts(req, res, next) {
+  async getAll(req, res, next) {
     try {
       const productService = new ProductService(this.productRepository);
       const products = await productService.listAllProducts();
