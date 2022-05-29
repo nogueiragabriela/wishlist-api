@@ -9,10 +9,10 @@ class ClientService {
 
     async create(data) {
         const email = data.email
-        const emailExists = await this.clientRepository.getByEmail(email)   
+        const emailExists = await this.clientRepository.getByEmail(email)
         if (emailExists) {
             throw new Error("Email already exists")
-        } 
+        }
         let hashPassword = await bcrypt.hash(data.password, 10)
         data.password = hashPassword
         const client = await this.clientRepository.create(data)
@@ -23,17 +23,18 @@ class ClientService {
         if (mongoose.Types.ObjectId.isValid(idOrEmail)) {
             return await this.clientRepository.get(idOrEmail)
         }
-        return await this.clientRepository.getByEmail(idOrEmail)
+        const selectFields = '-password -__v'
+        return await this.clientRepository.getByEmail(idOrEmail, selectFields)
     }
 
-    async update(id, data) {   
+    async update(id, data) {
         if (data.email) {
             const emailExists = await this.clientRepository.getByEmail(data.email)
             if (emailExists) {
                 throw new Error("Email already exists")
             }
         }
-        if(data.password){
+        if (data.password) {
             let hashPassword = await bcrypt.hash(data.password, 10)
             data.password = hashPassword
         }

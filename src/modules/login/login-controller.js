@@ -1,12 +1,12 @@
 import LoginService from './login-service.js'
-import LoginRepository from './login-repository.js'
+import ClientRepository from '../client/client-repository.js'
 import httpStatus from 'http-status'
 
 class LoginController {
-    LoginRepository = new LoginRepository()
+    clientRepository = new ClientRepository()
     async login(req, res) {
         try {
-            const loginService = new LoginService(this.LoginRepository)
+            const loginService = new LoginService(this.clientRepository)
             const accessToken = await loginService.verify(req.body)
             res.status(httpStatus.OK).send(accessToken)
         }

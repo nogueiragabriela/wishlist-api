@@ -1,7 +1,7 @@
 import express from 'express';
 import ClientController from './client-controller.js';
 import { InputValidation } from '../../middleware/inputValidation/index.js';
-import { createClientSchema, updateClientSchema } from './client-schema.js';
+import { createClientSchema, updateClientSchema, getClientSchema } from './client-schema.js';
 
 const ClientRouter = express();
 
@@ -11,7 +11,7 @@ ClientRouter.post('/', InputValidation(createClientSchema), async (req, res) => 
 
 ClientRouter.put('/:id', InputValidation(updateClientSchema), async (req, res) =>  clientController.update(req, res));
 
-ClientRouter.delete('/:id', async (req, res) => clientController.delete(req, res));
+ClientRouter.delete('/:id',  async (req, res) => clientController.delete(req, res));
 
 ClientRouter.get('/:idOrEmail', async (req, res) => clientController.get(req, res));
 

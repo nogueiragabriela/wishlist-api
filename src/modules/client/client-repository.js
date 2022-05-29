@@ -1,7 +1,9 @@
 import clientModel from "./client-model.js";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-mongoose.connect('mongodb+srv://jessycipriano:ukWx1LFDTT75LGSZ@apisdatabase.udwbb.mongodb.net/wishlist-api?retryWrites=true&w=majority')
+dotenv.config();
+mongoose.connect(process.env.CONNECTION_STRING)
 
  class ClientRepository {
  
@@ -21,8 +23,8 @@ mongoose.connect('mongodb+srv://jessycipriano:ukWx1LFDTT75LGSZ@apisdatabase.udwb
        return await clientModel.findById(id).select('-password -__v');
     }
 
-    async getByEmail(email) {
-        return await clientModel.findOne({'email':email}).select('-password -__v');
+    async getByEmail(email, selectFields) {
+        return await clientModel.findOne({'email':email}).select(selectFields);
     }
 
     async getAll(page, limit, params) {
