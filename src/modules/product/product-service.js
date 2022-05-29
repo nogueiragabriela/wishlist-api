@@ -7,13 +7,7 @@ class ProductService {
   }
 
   async create(data) {
-    const { title, description, brand, price } = data;
-    const product = await this.productRepository.create({
-      title,
-      description,
-      brand,
-      price,
-    });
+    const product = await this.productRepository.create(data);
     return product;
   }
 

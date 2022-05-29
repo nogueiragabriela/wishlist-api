@@ -20,7 +20,7 @@ class ProductController {
       const productService = new ProductService(this.productRepository);
       const product = await productService.listById(req.params.id);
       return res.status(200).json({ product });
-    } catch (err) {
+    } catch (err) {   
       next(err);
     }
   }
@@ -28,7 +28,7 @@ class ProductController {
   async listAllProducts(req, res, next) {
     try {
       const productService = new ProductService(this.productRepository);
-      const products = await productService.listAllProducts();
+      const products = await productService.listAllProducts(req.query.page, req.query.limit, req.query);
       return res.status(200).json({ products });
     } catch (err) {
       next(err);
@@ -59,3 +59,5 @@ class ProductController {
 }
 
 export default ProductController;
+
+// get array length

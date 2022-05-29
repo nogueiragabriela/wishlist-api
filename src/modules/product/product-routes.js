@@ -1,5 +1,5 @@
 import express from 'express';
-import ProductController from './product-controller'; 
+import ProductController from './product-controller.js';
 import { InputValidation } from '../../middleware/inputValidation/index.js';
 import { createProductSchema, updateProductSchema } from './product-schema.js';
 
@@ -9,19 +9,18 @@ const productController = new ProductController();
 
 ProductRouter.post(
   '/',
-  // InputValidation(createProductSchema),
+  InputValidation(createProductSchema),
   async (req, res, next) => productController.create(req, res, next),
 );
 
 ProductRouter.delete(
   '/:id',
-  // InputValidation(updateProductSchema),
   async (req, res, next) => productController.delete(req, res, next),
 );
 
 ProductRouter.put(
   '/:id',
-  // InputValidation(updateProductSchema),
+  InputValidation(updateProductSchema),
   async (req, res, next) => productController.update(req, res, next),
 );
 
