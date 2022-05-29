@@ -1,15 +1,16 @@
 import Joi from "joi"
 
 const createwishListSchema = Joi.object({
-  name: Joi.string().required().messages({'string.name': 'name is not valid', 'string.empty': 'name is required'}),
-  client_id: Joi.string().required(),
-  products_ids: Joi.array().default([]).required(),
-  createdAt: Joi.string().alphanum().required()
+  title: Joi.string().required().messages({'string.title': 'title is not valid', 'string.empty': 'title is required'}),
+  client: Joi.string().required(),
+  products: Joi.array().default([]).required(),
+  description: Joi.string()
 })
 
 const updatewishListSchema = Joi.object({
-  name: Joi.string(),
-  createdAt: Joi.string().alphanum()
+  title: Joi.string(),
+  products: Joi.array().default([]).required(),
+  description: Joi.string()
 })
 
 export { createwishListSchema, updatewishListSchema }

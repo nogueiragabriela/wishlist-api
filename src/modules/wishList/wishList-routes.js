@@ -1,5 +1,5 @@
 import express from 'express';
-import wishListController from './wishList-controller';
+import WishListController from './wishList-controller.js';
 import { InputValidation } from '../../middleware/inputValidation/index.js';
 import { createwishListSchema, updatewishListSchema } from './wishList-schema.js';
 
@@ -7,10 +7,18 @@ const WishListRouter = express();
 
 const wishListController = new WishListController();
 
-wishListRouter.post('/', InputValidation(createwishListSchema), async (req, res) => wishListController.create(req, res));
+WishListRouter.post('/', InputValidation(createwishListSchema), async (req, res) => wishListController.create(req, res));
 
-wishListRouter.put('/:id', InputValidation(updatewishListSchema), async (req, res) =>  wishListController.update(req, res));
+WishListRouter.put('/addProducts/:id', InputValidation(updatewishListSchema), async (req, res) =>  wishListController.updateAddProducts(req, res));
 
-wishListRouter.get('/:id', wishListController.listWishListById);
+WishListRouter.put('/deleteProducts/:id', InputValidation(updatewishListSchema), async (req, res) =>  wishListController.updateDeleteProducts(req, res));
 
-export default wishListRouter;
+WishListRouter.get('/:id', async (req, res) =>  wishListController.getWishLists(req, res));
+
+WishListRouter.get('/', async (req, res) =>  wishListController.getAll(req, res));
+
+WishListRouter.get('/client/:client', async (req, res) =>  wishListController.getByClient(req, res));
+
+
+
+export default WishListRouter;

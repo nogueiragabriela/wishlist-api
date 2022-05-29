@@ -6,9 +6,9 @@ class ProductService {
   }
 
   async create(data) {
-    const { type, description, brand, price } = data; // title, description, brand, price * falta código
+    const { title, description, brand, price } = data; // title, description, brand, price * falta código
     const product = await this.productRepository.create({
-      type,
+      title,
       description,
       brand,
       price,

@@ -1,42 +1,62 @@
 import wishListModel from "./wishList-model.js";
 import mongoose from "mongoose";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
-dotenv.config()
+dotenv.config();
 
-mongoose.connect(process.env.CONNECTION_STRING)
+mongoose.connect(process.env.CONNECTION_STRING);
 class WishListRepository {
+  async get(id) {
+    return await wishListModel
+      .findById(id)
+      .populate("products")
+      .populate("client");
+  }
 
-    async getById(id) {
-        return await wishListModel.findById(id);
-    }
+  async getById(id) {
+    return await wishListModel.findById(id);
+  }
 
-    async getByName(name) {
-        return await wishListModel.findOne(name);
-    }
+  async getByClient(client) {
+    return await wishListModel
+      .find({ client: client })
+      .populate("products")
+      .populate("client");
+  }
 
-    async create(data) {
-        return await wishListModel.create(data);
-        //Usar o populate
-    }
+  async getByTitle(title) {
+    return await wishListModel.findOne({ title: title });
+  }
 
-    async update(id) {
-        return await wishListModel.findByIdAndUpdate(id, client);
-        //Usar o populate
-    }
+  async getAllProducts(id) {
+    return await wishListModel.findOne(id);
+  }
 
-    async deleteWishList(id) {
-        return await wishListModel.findByIdAndDelete(id);
-    }
+  async getProducts(id) {
+    return await wishListModel.findOne(id);
+  }
 
-    async deleteProduct(id) {
-        return await wishListModel.findByIdAndDelete(id);
-    }
+  async create(data) {
+    return await wishListModel.create(data);
+  }
 
-    async getAll(page, limit, params) {
-        return await wishListModel.find(params).skip(page).limit(limit);
-    }
-    
+  async updateAddProducts(id, data) {
+    return await wishListModel
+      .findByIdAndUpdate(id, data, { new: true })
+      .populate("products");
+  }
+
+  async updateDeleteProducts(id, data) {
+    return await wishListModel.findByIdAndUpdate(id, data, { new: true });
+  }
+
+  async delete(id) {
+    return await wishListModel.findByIdAndDelete(id);
+  }
+
+  async getAll(page, limit, params) {
+    return await wishListModel.find(params).skip(page).limit(limit);
+  }
 }
 
-export default WishListRepository
+export default WishListRepository;
