@@ -15,20 +15,20 @@ class ProductController {
     }
   }
 
-  async listProductById(req, res, next) {
+  async getById(req, res, next) {
     try {
       const productService = new ProductService(this.productRepository);
-      const product = await productService.listById(req.params.id);
+      const product = await productService.getById(req.params.id);
       return res.status(200).json({ product });
     } catch (err) {
       next(err);
     }
   }
 
-  async listAllProducts(req, res, next) {
+  async getAll(req, res, next) {
     try {
       const productService = new ProductService(this.productRepository);
-      const products = await productService.listAllProducts();
+      const products = await productService.getAll();
       return res.status(200).json({ products });
     } catch (err) {
       next(err);

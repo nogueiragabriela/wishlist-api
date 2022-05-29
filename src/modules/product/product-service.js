@@ -8,20 +8,22 @@ class ProductService {
 
   async create(data) {
     const { title, description, brand, price } = data;
+    const sku = Math.random().toString(36).slice(2, 10).toUpperCase();
     const product = await this.productRepository.create({
       title,
       description,
       brand,
+      sku,
       price,
     });
     return product;
   }
 
-  async listById(id) {
+  async getById(id) {
     return await this.productRepository.get(id);
   }
 
-  async listAllProducts() {
+  async getAll() {
     return await this.productRepository.getAll();
   }
 
