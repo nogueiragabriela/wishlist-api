@@ -36,11 +36,11 @@ class WishListService {
 
 
   async updateAddProducts(id, data) {
-   
+
     if (data.products) {
       const { products } = data;
       const wishList = await this.wishListRepository.getById(id);
-     
+
       for (let i = 0; i < products.length; i++) {
         for (let j = i + 1; j < products.length; j++) {
           if (products[i] === products[j]) {
@@ -69,7 +69,7 @@ class WishListService {
 
 
 
-  
+
   async updateDeleteProducts(id, data) {
     let wishList = await this.wishListRepository.getById(id);
     if (data.products) {
@@ -117,6 +117,8 @@ class WishListService {
   async getByClient(client) {
     return await this.wishListRepository.getByClient(client);
   }
+
+  
 }
 
 export default WishListService;

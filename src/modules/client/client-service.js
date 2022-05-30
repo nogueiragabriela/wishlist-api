@@ -2,10 +2,14 @@ import mongoose from "mongoose"
 import bcrypt from "bcrypt"
 class ClientService {
     constructor(
-        clientRepository
+        clientRepository,
+        wishListRepository
     ) {
         this.clientRepository = clientRepository
+        this.wishListRepository = wishListRepository
     }
+
+
 
     async create(data) {
         const email = data.email
@@ -49,7 +53,7 @@ class ClientService {
 
     async getAll(page, limit, filter) {
         if (filter.name) {
-           filter.name = { $regex:filter.name, $options: 'i' }
+            filter.name = { $regex: filter.name, $options: 'i' }
         }
         delete filter.page
         delete filter.limit
@@ -57,8 +61,10 @@ class ClientService {
         return await this.clientRepository.getAll(startIndex, limit, filter)
     }
 
-    getWishLists(id) {
-        //chamar serviço do wishist
+    async getClientWishlistsIds(id) {
+        const wishLists = await this.wishListRepository.getByClient(id);
+        const wishlistsIds = wishLists.map(wishlist => wishlist._id);
+        return wishlistsIds;
     }
 
 

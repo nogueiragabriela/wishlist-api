@@ -18,6 +18,6 @@ ClientRouter.get('/:idOrEmail', async (req, res) => clientController.get(req, re
 
 ClientRouter.get('/', async (req, res) => clientController.getAll(req, res));
 
-ClientRouter.get('/wishlist/:id', ensureAuthenticatedJwt, async (req, res) => clientController.getClientLists(req, res));
+ClientRouter.get('/wishlist/:id', async (req, res) => clientController.getWishLists(req, res));
 
 export { ClientRouter }

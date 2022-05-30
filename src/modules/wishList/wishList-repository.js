@@ -24,6 +24,7 @@ class WishListRepository {
       .populate("client");
   }
 
+
   async getByTitle(title) {
     title = title.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     return await wishListModel.findOne({ title: title });

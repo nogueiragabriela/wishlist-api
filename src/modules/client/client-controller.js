@@ -1,9 +1,11 @@
 import ClientService from './client-service.js'
 import ClientRepository from './client-repository.js'
+import WishListRepository from '../wishList/wishList-repository.js'
 import httpStatus from 'http-status'
 
 class ClientController {
     clientRepository = new ClientRepository()
+    wishListRepository = new WishListRepository()
 
     async create(req, res) {
         try {
@@ -41,7 +43,7 @@ class ClientController {
                     client
                 })
             }
-        } catch (err){
+        } catch (err) {
             res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
                 message: err.message
             })
@@ -108,11 +110,14 @@ class ClientController {
         }
     }
 
-    async getWishLists(id) {
+    async getWishLists(req, res) {
         try {
-            const clientService = new ClientService(this.clientRepository)
-            return await clientService.getWishLists(id)
-        } catch {
+            const clientService = new ClientService(this.clientRepository, this.wishListRepository)
+            const wishListsIds = await clientService.getClientWishlistsIds(req.params.id)
+            res.status(httpStatus.OK).json({
+                wishListsIds
+            })
+        } catch (err) {
             res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
                 message: err.message
             })
