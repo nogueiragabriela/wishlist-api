@@ -14,10 +14,10 @@ ClientRouter.put('/:id',  ensureAuthenticatedJwt, InputValidation(updateClientSc
 
 ClientRouter.delete('/:id', ensureAuthenticatedJwt, async (req, res) => clientController.delete(req, res));
 
-ClientRouter.get('/:idOrEmail', async (req, res) => clientController.get(req, res));
+ClientRouter.get('/:idOrEmail', ensureAuthenticatedJwt, async (req, res) => clientController.get(req, res));
 
 ClientRouter.get('/', async (req, res) => clientController.getAll(req, res));
 
-ClientRouter.get('/wishlist/:id', async (req, res) => clientController.getWishLists(req, res));
+ClientRouter.get('/wishlist/:id', ensureAuthenticatedJwt, async (req, res) => clientController.getWishLists(req, res));
 
 export { ClientRouter }
