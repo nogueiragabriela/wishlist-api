@@ -64,7 +64,6 @@ class WishListRepository {
   
   async getByProduct(product) {
     const wishlist = await wishListModel.find({ products: {$elemMatch: {$in:product}} });
-    console.log(wishlist);
     return wishlist;
   }
 }

@@ -51,12 +51,18 @@ class ProductService {
 
   async delete(id) {
     const wishList = await this.wishListRepository.getByProduct(id);
-    console.log(wishList);
     if(wishList.length > 0) {
       throw new Error('Product in wishlists, can\'t delete!');
     }
     return await this.productRepository.delete(id);
   }
+
+  async getwishListswithProduct(id) {
+    return await this.wishListRepository.getByProduct(id);
+  }
+
+
+
 }
 
 export default ProductService;

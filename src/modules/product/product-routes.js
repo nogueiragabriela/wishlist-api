@@ -32,4 +32,8 @@ ProductRouter.get('/', async (req, res, next) =>
   productController.getAll(req, res, next),
 );
 
+ProductRouter.get('/wishlist/:id', async (req, res, next) =>
+  productController.getwishLists(req, res, next),
+);
+
 export { ProductRouter };

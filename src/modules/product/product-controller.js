@@ -21,7 +21,7 @@ class ProductController {
       const productService = new ProductService(this.productRepository);
       const product = await productService.getById(req.params.id);
       return res.status(200).json({ product });
-    } catch (err) {   
+    } catch (err) {
       next(err);
     }
   }
@@ -47,6 +47,19 @@ class ProductController {
       next(err);
     }
   }
+
+
+  async getwishLists(req, res, next) {
+    try {
+      const productService = new ProductService(this.productRepository, this.wishListRepository);
+      const wishLists = await productService.getwishListswithProduct(req.params.id);
+      return res.status(200).json({ wishLists });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+
 
   async delete(req, res, next) {
     try {

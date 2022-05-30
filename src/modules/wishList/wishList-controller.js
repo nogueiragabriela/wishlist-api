@@ -112,7 +112,9 @@ class WishListController {
       const wishList = await wishListService.get(id);
       res.status(200).json(wishList);
     } catch (err) {
-      console.log(err);
+      res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+        message: err.message,
+      });
     }
   }
 
