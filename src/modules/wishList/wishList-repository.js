@@ -26,7 +26,7 @@ class WishListRepository {
 
 
   async getByTitle(title) {
-    title = title.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    title = title.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     return await wishListModel.findOne({ title: title });
   }
 
@@ -49,7 +49,9 @@ class WishListRepository {
   }
 
   async updateDeleteProducts(id, data) {
-    return await wishListModel.findByIdAndUpdate(id, data, { new: true }).populate('products');
+    return await wishListModel
+      .findByIdAndUpdate(id, data, { new: true })
+      .populate("products");
   }
 
   async delete(id) {
@@ -58,6 +60,12 @@ class WishListRepository {
 
   async getAll(page, limit, params) {
     return await wishListModel.find(params).skip(page).limit(limit);
+  }
+  
+  async getByProduct(product) {
+    const wishlist = await wishListModel.find({ products: {$elemMatch: {$in:product}} });
+    console.log(wishlist);
+    return wishlist;
   }
 }
 

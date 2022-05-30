@@ -74,7 +74,7 @@ class ClientController {
 
     async delete(req, res) {
         try {
-            const clientService = new ClientService(this.clientRepository)
+            const clientService = new ClientService(this.clientRepository, this.wishListRepository)
             const client = await clientService.delete(req.params.id)
             if (client == null || client.length == 0) {
                 res.status(httpStatus.NOT_FOUND).send()

@@ -47,6 +47,11 @@ class ClientService {
 
 
     async delete(id) {
+        console.log(id)
+        const wishLists = await this.wishListRepository.getByClient(id);
+        if (wishLists.length > 0) {
+            throw new Error("Client has wishlists, can't delete!")
+        }
         return await this.clientRepository.delete(id)
     }
 

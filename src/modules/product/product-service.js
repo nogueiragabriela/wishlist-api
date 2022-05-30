@@ -1,9 +1,14 @@
 import mongoose from 'mongoose';
+import WishListRepository from '../wishList/wishList-repository.js';
 import ProductRepository from './product-repository.js';
 
 class ProductService {
-  constructor(productRepository = ProductRepository) {
+  constructor(
+    productRepository = ProductRepository,
+    wishListRepository = WishListRepository
+    ) {
     this.productRepository = productRepository;
+    this.wishListRepository = wishListRepository;
   }
 
   async create(data) {
@@ -45,6 +50,11 @@ class ProductService {
   }
 
   async delete(id) {
+    const wishList = await this.wishListRepository.getByProduct(id);
+    console.log(wishList);
+    if(wishList.length > 0) {
+      throw new Error('Product in wishlists, can\'t delete!');
+    }
     return await this.productRepository.delete(id);
   }
 }

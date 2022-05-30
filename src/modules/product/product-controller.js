@@ -1,9 +1,10 @@
 import ProductService from './product-service.js';
 import ProductRepository from './product-repository.js';
-// import httpStatus from 'http-status'
+import WishListRepository from '../wishList/wishList-repository.js'
 
 class ProductController {
   productRepository = new ProductRepository();
+  wishListRepository = new WishListRepository()
 
   async create(req, res, next) {
     try {
@@ -49,7 +50,7 @@ class ProductController {
 
   async delete(req, res, next) {
     try {
-      const productService = new ProductService(this.productRepository);
+      const productService = new ProductService(this.productRepository, this.wishListRepository);
       const product = await productService.delete(req.params.id);
       return res.status(200).json({ product });
     } catch (err) {
