@@ -35,6 +35,10 @@ class WishListService {
     if (data.products) {
       const { products } = data;
       const wishList = await this.wishListRepository.getById(id);
+      
+      if (!wishList) {
+        throw new Error("Wishlist doesn't exist!");
+      }
 
       for (let i = 0; i < products.length; i++) {
         for (let j = i + 1; j < products.length; j++) {
@@ -62,9 +66,17 @@ class WishListService {
 
   async updateDeleteProducts(id, data) {
     let wishList = await this.wishListRepository.getById(id);
+    if (!wishList) {
+      throw new Error("Wishlist doesn't exist!");
+    }
+
+    if (wishList.products.length === 1) {
+      throw new Error("You can't delete the last product in your wishlist!");
+    }
+
+
     if (data.products) {
       const { products } = data;
-
       for (let i = 0; i < products.length; i++) {
         for (let j = i + 1; j < products.length; j++) {
           if (products[i] === products[j]) {
@@ -74,12 +86,15 @@ class WishListService {
           }
         }
       }
+
       for (let i = 0; i < products.length; i++) {
-        for (let j = 0; j < wishList.products.length; j++) {
-          if (products[i] === wishList.products[j].valueOf()) {
-            wishList.products = wishList.products.splice(j, 1);
-          }
+        var index = wishList.products.indexOf(products[i]);
+        if(index === -1){
+          throw new Error(
+            "You are trying to delete a product that doesn't exist in your wishlist!"
+          );
         }
+        wishList.products.splice(index, 1);
       }
       data.products = wishList.products;
     }
@@ -108,7 +123,7 @@ class WishListService {
     return await this.wishListRepository.getByClient(client);
   }
 
-  
+
 }
 
 export default WishListService;
