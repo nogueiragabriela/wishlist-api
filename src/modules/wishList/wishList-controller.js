@@ -80,7 +80,11 @@ class WishListController {
             const wishListService = new WishListService(wishListRepository)
             const wishList = await wishListService.delete(id)
             res.status(200).json(wishList)
-        } catch (err) { }
+        } catch (err) {
+            res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+                message: err.message
+            })
+         }
     }
 
     async getAll(req,res) {

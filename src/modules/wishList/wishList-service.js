@@ -74,11 +74,13 @@ class WishListService {
       for (let i = 0; i < products.length; i++) {
         for (let j = 0; j < wishList.products.length; j++) {
           if (products[i] === wishList.products[j].valueOf()) {
-            wishList.products = wishList.products.splice(j);
+            wishList.products = wishList.products.splice(j, 1);
+            console.log(products);
           }
         }
       }
       data.products = wishList.products;
+      console.log(data.products);
     }
     return await this.wishListRepository.updateDeleteProducts(id, data);
   }
