@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import { errorMiddleware } from './src/middleware/errorMiddleware/index.js';
 
 dotenv.config();
-const PORT = process.env.PORT || 3009;
+const PORT = process.env.PORT
 
 const app = express();
 
