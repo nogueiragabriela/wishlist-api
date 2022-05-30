@@ -9,7 +9,7 @@ class ProductService {
   async create(data) {
     const { title, description, brand, price } = data;
     //veirfy if title is unique
-    const productTitleExists = await this.productRepository.getByTitle( title );
+    const productTitleExists = await this.productRepository.getByTitle(title);
     if (productTitleExists) {
       throw new Error('Product title already exists');
     }

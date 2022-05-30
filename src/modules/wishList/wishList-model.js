@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const wishListSchema = new Schema({
-    name: {
+    title: {
         type: String,
         required: true,
         trim: true,
@@ -23,12 +23,17 @@ const wishListSchema = new Schema({
     description: {
         type: String,
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    }
+    timestamps: {
+        createdAt: {
+            type: Date,
+            default: Date.now,
+        },
+        updatedAt: {
+            type: Date,
+            default: Date.now,
+        }
+    }  
 });
 
 const wishListModel = mongoose.model('wishList', wishListSchema);
-
 export default wishListModel;

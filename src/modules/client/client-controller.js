@@ -33,7 +33,7 @@ class ClientController {
         try {
             const clientService = new ClientService(this.clientRepository)
             const client = await clientService.get(req.params.idOrEmail)
-            if (client == n) {
+            if (client == null || client.length == 0) {
                 res.status(httpStatus.NOT_FOUND).send()
             }
             else {
@@ -41,7 +41,7 @@ class ClientController {
                     client
                 })
             }
-        } catch {
+        } catch (err){
             res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
                 message: err.message
             })
