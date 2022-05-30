@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-//import { getRawInput } from "readline-sync";
 import WishListRepository from "./wishList-repository.js";
 
 class WishListService {
@@ -12,9 +11,7 @@ class WishListService {
     for (let i = 0; i < products.length; i++) {
       for (let j = i + 1; j < products.length; j++) {
         if (products[i] === products[j]) {
-          throw new Error(
-            "You are trying to add a product twice!"
-          );
+          throw new Error("You are trying to add a product twice!");
         }
       }
     }
@@ -34,13 +31,11 @@ class WishListService {
     return await this.wishListRepository.create(data);
   }
 
-
   async updateAddProducts(id, data) {
-   
     if (data.products) {
       const { products } = data;
       const wishList = await this.wishListRepository.getById(id);
-     
+
       for (let i = 0; i < products.length; i++) {
         for (let j = i + 1; j < products.length; j++) {
           if (products[i] === products[j]) {
@@ -65,11 +60,6 @@ class WishListService {
     return await this.wishListRepository.updateAddProducts(id, data);
   }
 
-
-
-
-
-  
   async updateDeleteProducts(id, data) {
     let wishList = await this.wishListRepository.getById(id);
     if (data.products) {
@@ -120,6 +110,3 @@ class WishListService {
 }
 
 export default WishListService;
-
-
-

@@ -21,6 +21,4 @@ WishListRouter.get('/', async (req, res) =>  wishListController.getAll(req, res)
 
 WishListRouter.get('/client/:client', async (req, res) =>  wishListController.getByClient(req, res));
 
-
-
 export default WishListRouter;
