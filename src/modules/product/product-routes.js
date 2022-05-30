@@ -25,11 +25,11 @@ ProductRouter.put(
 );
 
 ProductRouter.get('/:id', async (req, res, next) =>
-  productController.listProductById(req, res, next),
+  productController.getById(req, res, next),
 );
 
 ProductRouter.get('/', async (req, res, next) =>
-  productController.listAllProducts(req, res, next),
+  productController.getAll(req, res, next),
 );
 
 export { ProductRouter };

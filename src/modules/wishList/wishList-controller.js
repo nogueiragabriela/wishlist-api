@@ -9,7 +9,7 @@ class WishListController {
             return await wishListService.create(data)
         }
         catch (err) { 
-            console.log(err)
+          
         }
     }
 

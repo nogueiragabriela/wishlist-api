@@ -1,8 +1,10 @@
 import productModel from './product-model.js';
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
+dotenv.config();
 mongoose.connect(
-  'mongodb+srv://jessycipriano:ukWx1LFDTT75LGSZ@apisdatabase.udwbb.mongodb.net/wishlist-api?retryWrites=true&w=majority',
+  process.env.CONNECTION_STRING
 );
 
 class ProductRepository {
@@ -10,8 +12,9 @@ class ProductRepository {
     return await productModel.findById(id).select('-password -__v');
   }
 
-  async getAll() {
-    return await productModel.find().select('-password -__v');
+  async getAll(startIndex, limit, filter) {
+    const products = await productModel.find(filter).skip(startIndex).limit(limit).select('-password -__v');
+    return products
   }
 
   async create(data) {
@@ -26,6 +29,16 @@ class ProductRepository {
 
   async delete(id) {
     return await productModel.findByIdAndDelete(id).select('-password -__v');
+  }
+
+  async getByTitle(title) {
+    title = title.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    return await productModel.findOne({
+      title: {
+        $regex: title,
+        $options: 'i',
+      },
+    });
   }
 }
 

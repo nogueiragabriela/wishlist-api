@@ -21,6 +21,11 @@ const productSchema = new Schema({
     required: true,
     trim: true,
   },
+  sku: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   price: {
     type: Number,
     required: true,

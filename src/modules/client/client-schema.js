@@ -26,5 +26,10 @@ const updateClientSchema = Joi.object({
     })
 })
 
-export { createClientSchema, updateClientSchema }
+const getClientSchema = Joi.object({
+   idOrEmail: Joi.string().required()
+})
+
+
+export { createClientSchema, updateClientSchema, getClientSchema }
 

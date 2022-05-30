@@ -33,7 +33,7 @@ class ClientController {
         try {
             const clientService = new ClientService(this.clientRepository)
             const client = await clientService.get(req.params.idOrEmail)
-            if (!client) {
+            if (client == n) {
                 res.status(httpStatus.NOT_FOUND).send()
             }
             else {
@@ -74,7 +74,7 @@ class ClientController {
         try {
             const clientService = new ClientService(this.clientRepository)
             const client = await clientService.delete(req.params.id)
-            if (!client) {
+            if (client == null || client.length == 0) {
                 res.status(httpStatus.NOT_FOUND).send()
             }
             else {
@@ -93,7 +93,7 @@ class ClientController {
         try {
             const clientService = new ClientService(this.clientRepository)
             const clients = await clientService.getAll(req.query.page, req.query.limit, req.query)
-            if (!clients) {
+            if (clients == null || clients.length == 0) {
                 res.status(httpStatus.NOT_FOUND).send()
             }
             else {
