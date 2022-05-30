@@ -10,7 +10,9 @@ class LoginService {
 
     async verify(data) {
         const email = data.email
-        const client = await this.loginRepository.getByEmail(email)
+        const selectFields = 'email password'
+        const client = await this.clientRepository.getByEmail(email, selectFields)
+
       
         if (!client) {
             throw new Error("User not found")

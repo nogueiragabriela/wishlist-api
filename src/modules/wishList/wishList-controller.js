@@ -9,11 +9,7 @@ class WishListController {
             const wishListService = new WishListService(this.wishListRepository)
             const wishList = await wishListService.create(req.body)
             res.status(httpStatus.CREATED).json({
-                wishListId: wishList._id,
-                title: wishList.title,
-                clientId: wishList.client,
-                products: wishList.products,
-                description: wishList.description
+                wishList
             })
         }
         catch (err) {

@@ -7,32 +7,40 @@ class WishListService {
     this.wishListRepository = wishListRepository;
   }
   async create(data) {
-    const { title, products, client } = data;
+    const { title, products } = data;
+
+    for (let i = 0; i < products.length; i++) {
+      for (let j = i + 1; j < products.length; j++) {
+        if (products[i] === products[j]) {
+          throw new Error(
+            "You are trying to add a product twice!"
+          );
+        }
+      }
+    }
+
     const titleExists = await this.wishListRepository.getByTitle(title);
+
     if (titleExists) {
       throw new Error("You already have a wishlist with this title!");
     }
+
     if (products.length === 0) {
       throw new Error(
         "You can't create a wishlist without at least one product!"
       );
     }
-    for (let i = 0; i < products.length; i++) {
-      for (let j = i + 1; j < products.length; j++) {
-        if (products[i] === products[j]) {
-          throw new Error(
-            "You are trying to add a product that already exists in your wishlist!"
-          );
-        }
-      }
-    }
+
     return await this.wishListRepository.create(data);
   }
 
+
   async updateAddProducts(id, data) {
+   
     if (data.products) {
       const { products } = data;
       const wishList = await this.wishListRepository.getById(id);
+     
       for (let i = 0; i < products.length; i++) {
         for (let j = i + 1; j < products.length; j++) {
           if (products[i] === products[j]) {
@@ -57,6 +65,11 @@ class WishListService {
     return await this.wishListRepository.updateAddProducts(id, data);
   }
 
+
+
+
+
+  
   async updateDeleteProducts(id, data) {
     let wishList = await this.wishListRepository.getById(id);
     if (data.products) {
@@ -92,8 +105,8 @@ class WishListService {
   }
 
   async getAll(page, limit, params) {
-    if (params.name) {
-      params.name = { $regex: params.name, $options: "i" };
+    if (params.title) {
+      params.title = { $regex: params.title, $options: "i" };
     }
     delete params.page;
     delete params.limit;
@@ -107,3 +120,6 @@ class WishListService {
 }
 
 export default WishListService;
+
+
+
